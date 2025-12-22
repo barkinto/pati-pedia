@@ -34,18 +34,9 @@ COPY transformer_models.py .
 COPY augmentation_utils.py .
 COPY cat_breed_info.py .
 COPY show_classes.py .
-COPY yolo11n.pt .
-
-# Copy Streamlit config
-COPY .streamlit .streamlit
-
-# Create necessary directories
-RUN mkdir -p runs/resnet50_v2/weights
-RUN mkdir -p runs/optimal_ensemble
-
-# Copy the trained models (will be added by user)
-COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
-COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
+# Copy the trained models (Use HF upload for large files if not in git)
+# COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
+# COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
 
 # Copy cat breed info database
 COPY cat_breed_info.json .
