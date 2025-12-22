@@ -35,8 +35,8 @@ COPY augmentation_utils.py .
 COPY cat_breed_info.py .
 COPY show_classes.py .
 # Copy the trained models (Use HF upload for large files if not in git)
-COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
-# COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
+COPY runs ./runs
+# COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
 
 # Copy cat breed info database
 COPY cat_breed_info.json .
