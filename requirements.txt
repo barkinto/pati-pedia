@@ -1,0 +1,26 @@
+# Python dependencies (Python 3.13 compatible)
+torch>=2.5.0
+torchvision>=0.20.0
+ultralytics>=8.3.0
+streamlit>=1.39.0
+Pillow>=10.4.0
+numpy>=1.24.0
+opencv-python-headless==4.9.0.80
+pyyaml==6.0.1
+tqdm==4.66.1
+
+# Ensemble model extras
+scipy>=1.10.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Transformer models (for Super Ensemble)
+timm>=0.9.0
+
+# Flask API for React frontend
+flask==3.0.0
+flask-cors==4.0.0
+
+# Google Gemini AI (REST API)
+requests>=2.31.0

@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # ResNet50 App with Flask API
+  resnet50:
+    build: .
+    container_name: kedi-resnet50
+    ports:
+      - "8501:8501"
+      - "5001:5001"
+    volumes:
+      - ./runs/resnet50_v2/weights/best.pth:/app/runs/resnet50_v2/weights/best.pth:ro
+      - ./uploads:/app/uploads
+      - ./cat_breed_info.json:/app/cat_breed_info.json:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "api.py"]
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  
+  # Ensemble App (3 CNN Models)
+  ensemble:
+    build: .
+    container_name: kedi-ensemble
+    ports:
+      - "8502:8501"
+    volumes:
+      - ./runs/ensemble:/app/runs/ensemble:ro
+      - ./uploads:/app/uploads
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["streamlit", "run", "app_ensemble.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true"]
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    profiles:
+      - ensemble
+  
+  # Super Ensemble App (5 Models - Dengeli Yol)
+  super-ensemble:
+    build: .
+    container_name: kedi-super-ensemble
+    ports:
+      - "8503:8501"
+    volumes:
+      - ./runs/super_ensemble:/app/runs/super_ensemble:ro
+      - ./uploads:/app/uploads
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["streamlit", "run", "app_ensemble.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true"]
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    profiles:
+      - super

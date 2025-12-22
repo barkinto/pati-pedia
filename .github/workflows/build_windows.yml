@@ -1,0 +1,61 @@
+name: Build Windows Exe
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+        lfs: false
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller huggingface_hub
+
+    - name: Download Models
+      shell: python
+      run: |
+        from huggingface_hub import hf_hub_download
+        import os
+        
+        print("Downloading models...")
+        os.makedirs('runs/resnet50_v2/weights', exist_ok=True)
+        os.makedirs('runs/optimal_ensemble', exist_ok=True)
+        
+        hf_hub_download(repo_id="barkinto/patipedia", repo_type="space", filename="runs/resnet50_v2/weights/best.pth", local_dir=".")
+        hf_hub_download(repo_id="barkinto/patipedia", repo_type="space", filename="runs/optimal_ensemble/optimal_ensemble_final.pth", local_dir=".")
+        print("Models downloaded.")
+
+    - name: Build Executable
+      run: |
+        pyinstaller windows.spec
+
+    - name: Compress Build
+      shell: powershell
+      run: |
+        Compress-Archive -Path dist\PatiPedia -DestinationPath PatiPedia_Windows.zip
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PatiPedia-Windows-Exe
+        path: PatiPedia_Windows.zip
+        retention-days: 5
