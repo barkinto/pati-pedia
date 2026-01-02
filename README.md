@@ -94,9 +94,9 @@ Yapay zeka destekli, 59 farklı kedi cinsini tanıyabilen modern web uygulaması
 
 Abyssinian, American Bobtail, American Curl, American Shorthair, American Wirehair, Applehead Siamese, Balinese, Bengal, Birman, Bombay, British Shorthair, Burmese, Burmilla, Calico, Canadian Hairless, Chartreux, Chausie, Chinchilla, Cornish Rex, Cymric, Devon Rex, Dilute Calico, Dilute Tortoiseshell, Domestic Long Hair, Domestic Medium Hair, Domestic Short Hair, Egyptian Mau, Exotic Shorthair, Extra-Toes Cat, Havana, Himalayan, Japanese Bobtail, Javanese, Korat, LaPerm, Maine Coon, Manx, Munchkin, Nebelung, Norwegian Forest Cat, Ocicat, Oriental Long Hair, Oriental Short Hair, Oriental Tabby, Persian, Pixiebob, Ragamuffin, Ragdoll, Russian Blue, Scottish Fold, Selkirk Rex, Siamese, Siberian, Silver, Singapura, Snowshoe, Somali, Sphynx, Tabby
 
-## 👨‍💻 Geliştirici
+## 👨‍💻 Geliştiriciler
 
-**Barkın Özcan**
+**Şükrü Barkın Özcan**
 - GitHub: [@barkinto](https://github.com/barkinto)
 - Repository: [pati-pedia](https://github.com/barkinto/pati-pedia)
 
