@@ -6,7 +6,11 @@ Hugging Face Spaces Deployment
 import os
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
 import api
+
+# Load environment variables
+load_dotenv()
 
 # Flask app
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='')

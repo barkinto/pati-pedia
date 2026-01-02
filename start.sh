@@ -11,6 +11,11 @@ if [ ! -d ".venv" ]; then
     .venv/bin/pip install -r requirements.txt
 fi
 
+# Load .env variables if file exists
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
 # Activate virtual environment and run app
 echo "🚀 Starting PatiPedia on port $PORT..."
 echo "📱 Application URL: http://localhost:$PORT"

@@ -19,17 +19,19 @@ import numpy as np
 from functools import lru_cache
 from collections import defaultdict
 
+# Import new clean service
+try:
+    from gemini_service import gemini_service
+    GEMINI_AVAILABLE = True
+except ImportError:
+    GEMINI_AVAILABLE = False
+    print("⚠️ gemini_service.py not found")
+
 try:
     from ultralytics import YOLO
     YOLO_AVAILABLE = True
 except:
     YOLO_AVAILABLE = False
-
-try:
-    import requests
-    GEMINI_AVAILABLE = True
-except:
-    GEMINI_AVAILABLE = False
 
 # Base directory for web application
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -48,20 +50,18 @@ class_names = None
 device = None
 yolo_model = None
 
-# Cache for Gemini API responses (breed name -> (response, timestamp))
-gemini_cache = {}
-CACHE_DURATION = 3600 * 24  # 24 hours cache
+# Static cache for breed info
+breed_info_cache = {}
 
-# Rate limiting for Gemini API (prevent too many requests)
-last_api_call_time = defaultdict(float)
-MIN_API_CALL_INTERVAL = 2.0  # Minimum 2 seconds between API calls
+# Load static database
+STATIC_DB_PATH = os.path.join(BASE_DIR, 'cat_breed_info.json')
 
 
 def load_models():
     """Load YOLO and ResNet50 models"""
     global model, class_names, device, yolo_model
     
-    # Load YOLO model
+
     if YOLO_AVAILABLE:
         try:
             yolo_model = YOLO(YOLO_MODEL_PATH)
@@ -69,6 +69,13 @@ def load_models():
         except Exception as e:
             print(f"⚠️ YOLO model could not be loaded: {e}")
             yolo_model = None
+            
+    # Check API Key
+    api_key = os.getenv('GEMINI_API_KEY')
+    if api_key:
+        print(f"🔑 Gemini API Key loaded (starts with: {api_key[:5]}...)")
+    else:
+        print(f"⚠️ Gemini API Key NOT found in environment! Using default (quota limited).")
     
     # Load ResNet50 model
     try:
@@ -440,114 +447,33 @@ def get_breed_info_from_static_db(breed_name):
     return None
 
 def get_breed_info_from_gemini(breed_name):
-    """Get cat breed information from Gemini AI using REST API with caching and rate limiting (FALLBACK - requires API key)"""
     # First try static database (FREE)
     static_info = get_breed_info_from_static_db(breed_name)
     if static_info:
         return static_info
     
-    # If not found in static DB, try Gemini API (if available and configured)
-    if not GEMINI_AVAILABLE:
+    # If not found in static DB, try Gemini API via new service
+    if not GEMINI_AVAILABLE or not gemini_service.is_configured():
         return None
-    
-    # Normalize breed name for cache key
-    cache_key = breed_name.lower().strip()
-    
-    # Check cache first (24 hour cache)
-    current_time = time.time()
-    if cache_key in gemini_cache:
-        cached_response, cached_time = gemini_cache[cache_key]
-        if current_time - cached_time < CACHE_DURATION:
-            print(f"✅ Cache'den döndürüldü: {breed_name}")
-            return cached_response
-        else:
-            # Cache expired, remove it
-            del gemini_cache[cache_key]
-    
-    # Rate limiting: Check if we need to wait
-    time_since_last_call = current_time - last_api_call_time['breed_info']
-    if time_since_last_call < MIN_API_CALL_INTERVAL:
-        wait_time = MIN_API_CALL_INTERVAL - time_since_last_call
-        print(f"⏳ Rate limiting: {wait_time:.1f} saniye bekleniyor...")
-        time.sleep(wait_time)
-    
-    try:
-        # Get API key from environment variable or use default
-        api_key = os.getenv('GEMINI_API_KEY', 'AIzaSyD919v-LWT423ZpSX1MHPcjnlNsVuQW7PQ')
-        if not api_key:
-            print("⚠️ GEMINI_API_KEY environment variable not set")
-            return None
         
-        # Update last call time
-        last_api_call_time['breed_info'] = time.time()
-        
-        # Create prompt
-        prompt = f"""Lütfen {breed_name} kedi cinsi hakkında kedi sahipleri için pratik ve kısa bilgiler ver. 
+    print(f"🔄 Fetching info for {breed_name} from Gemini...")
+    
+    prompt = f"""Lütfen {breed_name} kedi cinsi hakkında kedi sahipleri için pratik ve kısa bilgiler ver. 
 Aşağıdaki bilgileri Türkçe olarak, kısa ve öz şekilde ver (her bölüm 2-3 cümle):
-1. **Karakter:** Bu kedi nasıl bir karaktere sahip? (sakin/aktif, sosyal/bağımsız, çocuklarla uyumlu mu?)
-2. **Bakım:** Günlük bakımda nelere dikkat edilmeli? (tüy bakımı, egzersiz ihtiyacı)
-3. **Sağlık:** Bilinen sağlık sorunları neler? (dikkat edilmesi gerekenler)
-4. **Mama:** Bu cins için önerilen mama markaları ve beslenme ipuçları (kuru/yaş mama önerileri)
-5. **Yaşam:** Hangi ortamlarda mutlu olur? (apartman/ev, çocuklu aile, tek kişi)
+1. **Karakter:** Bu kedi nasıl bir karaktere sahip?
+2. **Bakım:** Günlük bakımda nelere dikkat edilmeli?
+3. **Sağlık:** Bilinen sağlık sorunları neler?
+4. **Mama:** Beslenme ipuçları
+5. **Yaşam:** Hangi ortamlarda mutlu olur?
 
 Toplam maksimum 200 kelime. Pratik ve kedi sahipleri için faydalı bilgiler ver."""
 
-        # Call Gemini REST API
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
-        headers = {
-            'Content-Type': 'application/json',
-            'X-goog-api-key': api_key
-        }
-        data = {
-            "contents": [
-                {
-                    "parts": [
-                        {
-                            "text": prompt
-                        }
-                    ]
-                }
-            ]
-        }
-        
-        response = requests.post(url, headers=headers, json=data, timeout=30)
-        
-        if response.status_code == 429:
-            print("⚠️ Gemini API quota aşıldı (429). Statik veritabanı kullanılıyor.")
-            return None
-        elif response.status_code == 401 or response.status_code == 403:
-            print("⚠️ Gemini API yetkilendirme hatası. Statik veritabanı kullanılıyor.")
-            return None
-        
-        response.raise_for_status()
-        
-        result = response.json()
-        
-        # Extract text from response
-        if 'candidates' in result and len(result['candidates']) > 0:
-            if 'content' in result['candidates'][0]:
-                if 'parts' in result['candidates'][0]['content']:
-                    if len(result['candidates'][0]['content']['parts']) > 0:
-                        response_text = result['candidates'][0]['content']['parts'][0].get('text', '')
-                        # Cache the successful response
-                        if response_text:
-                            gemini_cache[cache_key] = (response_text, time.time())
-                            print(f"✅ Gemini API'den alındı ve cache'lendi: {breed_name}")
-                        return response_text
-        
-        return None
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 401 or e.response.status_code == 403:
-            print("⚠️ Gemini API yetkilendirme hatası. Statik veritabanı kullanılıyor.")
-            return None
-        elif e.response.status_code == 429:
-            print("⚠️ Gemini API quota hatası. Statik veritabanı kullanılıyor.")
-            return None
-        else:
-            print(f"⚠️ Gemini AI HTTP error: {e.response.status_code}. Statik veritabanı kullanılıyor.")
-            return None
-    except Exception as e:
-        print(f"⚠️ Gemini AI error: {e}. Statik veritabanı kullanılıyor.")
+    result = gemini_service.generate_content(prompt)
+    if "text" in result:
+        print(f"✅ Gemini API Success for {breed_name}")
+        return result["text"]
+    else:
+        print(f"⚠️ Gemini API Failed: {result.get('error')}")
         return None
 
 
@@ -591,29 +517,13 @@ def get_breed_info():
 
 
 def analyze_cat_image_with_gemini(image_base64, breed_name=None):
-    """Analyze cat image using Gemini AI vision model with rate limiting"""
-    if not GEMINI_AVAILABLE:
+    if not GEMINI_AVAILABLE or not gemini_service.is_configured():
         return None
-    
-    # Rate limiting: Check if we need to wait
-    current_time = time.time()
-    time_since_last_call = current_time - last_api_call_time['image_analysis']
-    if time_since_last_call < MIN_API_CALL_INTERVAL:
-        wait_time = MIN_API_CALL_INTERVAL - time_since_last_call
-        print(f"⏳ Rate limiting: {wait_time:.1f} saniye bekleniyor...")
-        time.sleep(wait_time)
-    
-    try:
-        api_key = os.getenv('GEMINI_API_KEY', 'AIzaSyD919v-LWT423ZpSX1MHPcjnlNsVuQW7PQ')
-        if not api_key:
-            return None
         
-        # Update last call time
-        last_api_call_time['image_analysis'] = time.time()
-        
-        # Create prompt for image analysis
-        breed_context = f" Tahmin edilen cins: {breed_name}." if breed_name else ""
-        prompt = f"""Bu kedi fotoğrafını analiz et ve aşağıdaki bilgileri Türkçe olarak, kısa ve pratik şekilde ver:
+    print(f"🔄 Analyzing cat image with Gemini...")
+    
+    breed_context = f" Tahmin edilen cins: {breed_name}." if breed_name else ""
+    prompt = f"""Bu kedi fotoğrafını analiz et ve aşağıdaki bilgileri Türkçe olarak, kısa ve pratik şekilde ver:
 
 **1. Yaş Tahmini:** Yavru mu, genç mi (1-2 yaş), yetişkin mi (3-7 yaş), yaşlı mı (8+ yaş)? Gözler, vücut yapısı ve tüy durumuna bakarak tahmin et.
 
@@ -627,68 +537,16 @@ def analyze_cat_image_with_gemini(image_base64, breed_name=None):
 
 Her bölüm 1-2 cümle, toplam maksimum 150 kelime."""
 
-        # Prepare image data
-        # Remove data URL prefix if present
-        if ',' in image_base64:
-            image_base64 = image_base64.split(',')[1]
-        
-        # Call Gemini Vision API
-        # Use gemini-2.0-flash (same as text generation)
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
-        headers = {
-            'Content-Type': 'application/json',
-            'X-goog-api-key': api_key
-        }
-        data = {
-            "contents": [
-                {
-                    "parts": [
-                        {
-                            "inline_data": {
-                                "mime_type": "image/jpeg",
-                                "data": image_base64
-                            }
-                        },
-                        {
-                            "text": prompt
-                        }
-                    ]
-                }
-            ]
-        }
-        
-        response = requests.post(url, headers=headers, json=data, timeout=30)
-        
-        if response.status_code == 429:
-            error_msg = response.json().get('error', {}).get('message', 'Quota aşıldı')
-            print(f"⚠️ Gemini API quota aşıldı (429): {error_msg}")
-            return "QUOTA_ERROR"  # Return special marker so parent function can set error message
-        
-        response.raise_for_status()
-        
-        result = response.json()
-        
-        # Extract text from response
-        if 'candidates' in result and len(result['candidates']) > 0:
-            if 'content' in result['candidates'][0]:
-                if 'parts' in result['candidates'][0]['content']:
-                    if len(result['candidates'][0]['content']['parts']) > 0:
-                        return result['candidates'][0]['content']['parts'][0].get('text', '')
-        
-        return None
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 429:
-            print("⚠️ Gemini API quota aşıldı (429). Görsel analizi atlanıyor.")
-            return "QUOTA_ERROR"  # Special marker for quota error
-        elif e.response.status_code == 401 or e.response.status_code == 403:
-            error_msg = "API key geçersiz veya süresi dolmuş. Lütfen yeni bir API key oluşturun."
-            print(f"❌ Gemini API yetkilendirme hatası ({e.response.status_code}): {error_msg}")
-            return None
-        else:
-            print(f"❌ Gemini Vision API HTTP error: {e.response.status_code} - {e.response.text[:200]}")
-        return None
-    except Exception as e:
-        print(f"❌ Gemini Vision AI error: {e}")
+    result = gemini_service.analyze_image(image_base64, prompt)
+    
+    if "text" in result:
+        print(f"✅ Gemini Vision API Success")
+        return result["text"]
+    elif "quota" in str(result.get('error', '')).lower() or "429" in str(result.get('error', '')):
+        print("⚠️ Gemini API quota exceed caught")
+        return "QUOTA_ERROR"
+    else:
+        print(f"⚠️ Gemini Vision API Failed: {result.get('error')}")
         return None
 
 

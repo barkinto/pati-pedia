@@ -1,3 +1,4 @@
+.env
 __pycache__
 *.pyc
 .venv
@@ -9,3 +10,4 @@ build
 # Large model files (downloaded during build)
 runs/resnet50_v2/weights/best.pth
 runs/optimal_ensemble/optimal_ensemble_final.pth
+runs/

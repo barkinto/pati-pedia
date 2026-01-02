@@ -22,6 +22,19 @@ Yapay zeka destekli, 59 farklı kedi cinsini tanıyabilen modern web uygulaması
 - 🎨 **Modern Arayüz**: PatiPedia tasarımı ile kullanıcı dostu deneyim
 - ⚡ **Hızlı Analiz**: CUDA destekli GPU hızlandırma
 
+
+## 🚀 Kurulum ve Çalıştırma
+
+### 🍎 Mac / Linux
+1. Terminali açın
+2. `./start.sh` komutunu çalıştırın
+
+### 🪟 Windows
+1. Klasördeki **`start.bat`** dosyasına çift tıklayın
+2. Otomatik kurulum yapılacak ve açılacaktır.
+
+⚠️ **Önemli Not:** Windows'ta `git clone` yaptıktan sonra `runs/` klasörünün içindeki model dosyalarının tam indiğinden emin olun.
+
 ## 🚀 Kullanım
 
 1. Kedi fotoğrafı yükleyin (drag & drop veya dosya seçimi)
