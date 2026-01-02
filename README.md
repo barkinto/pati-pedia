@@ -96,6 +96,10 @@ Abyssinian, American Bobtail, American Curl, American Shorthair, American Wireha
 
 ## 👨‍💻 Geliştirici
 
+**Barkın Özcan**
+- GitHub: [@barkinto](https://github.com/barkinto)
+- Repository: [pati-pedia](https://github.com/barkinto/pati-pedia)
+
 **Berke Gazioğlu**
 - GitHub: [@berkegazioglu](https://github.com/berkegazioglu)
 - Repository: [kedi-cins-tahmini](https://github.com/berkegazioglu/kedi-cins-tahmini)
