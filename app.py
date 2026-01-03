@@ -8,6 +8,11 @@ from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
 import api
 
+# Define MODEL_PATH with fallback
+MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
+if not os.path.exists(MODEL_PATH) and os.path.exists('best.pth'):
+    MODEL_PATH = 'best.pth'
+
 # Flask app
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
 CORS(app)

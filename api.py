@@ -44,6 +44,9 @@ CORS(app)  # Enable CORS for React frontend
 
 # Model paths
 MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
+if not os.path.exists(MODEL_PATH) and os.path.exists('best.pth'):
+    MODEL_PATH = 'best.pth'
+    print(f"⚠️ Model root dizinde bulundu, kullanılıyor: {MODEL_PATH}")
 YOLO_MODEL_PATH = 'yolo11n.pt'
 
 # Global variables for loaded models
