@@ -1,0 +1,33 @@
+services:
+  # Flask API Backend (Python + PyTorch + YOLO)
+  - type: web
+    name: patipedia-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 5001
+    autoDeploy: true
+    branch: main
+    
+  # React Frontend (Static Site)
+  - type: web
+    name: patipedia-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        value: https://patipedia-api.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    autoDeploy: true
+    branch: main

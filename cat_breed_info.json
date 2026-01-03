@@ -1,0 +1,415 @@
+{
+  "Abyssinian": {
+    "karakter": "Abyssinian kedileri çok aktif, meraklı ve zeki kedilerdir. Sosyal ve oyuncu bir yapıya sahiptirler, çocuklarla ve diğer evcil hayvanlarla iyi geçinirler.",
+    "bakim": "Kısa tüyleri olduğu için haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun ve egzersiz ihtiyaçları vardır.",
+    "saglik": "Genel olarak sağlıklı bir cinstir. Periodontal hastalık ve böbrek yetmezliği riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru mama ve yaş mama kombinasyonu önerilir. Royal Canin, Hill's Science Diet gibi markalar uygundur.",
+    "yasam": "Apartman ve ev yaşamına uygundur. Aktif oldukları için geniş alan ve oyun imkanı sağlanmalıdır. Çocuklu aileler için idealdir."
+  },
+  "American Bobtail": {
+    "karakter": "American Bobtail kedileri zeki, oyuncu ve sosyal kedilerdir. Kısa kuyrukları ile dikkat çekerler, çok meraklı ve aktif bir yapıya sahiptirler.",
+    "bakim": "Orta uzunlukta tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kuyruk yapısı nedeniyle omurga problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme sağlanmalıdır.",
+    "yasam": "Geniş alanları severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır. Çocuklu aileler için uygundur."
+  },
+  "American Curl": {
+    "karakter": "American Curl kedileri sakin, nazik ve sevgi dolu kedilerdir. Kıvrık kulakları ile karakteristik görünüme sahiptirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Kulak temizliği önemlidir, kıvrık yapı nedeniyle dikkatli olunmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kulak yapısı nedeniyle kulak enfeksiyonları riski taşırlar, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "American Shorthair": {
+    "karakter": "American Shorthair kedileri dengeli, sakin ve uyumlu kedilerdir. Çok zeki ve bağımsız bir yapıya sahiptirler, aile ortamına uygundurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak çok sağlıklıdırlar. Obeziteye yatkın oldukları için kilo kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Tek kişi veya aile ortamı için idealdir. Çocuklu aileler için uygundur."
+  },
+  "American Wirehair": {
+    "karakter": "American Wirehair kedileri sakin, dengeli ve uyumlu kedilerdir. Tel gibi tüyleri ile karakteristik görünüme sahiptirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Tel gibi tüyleri haftada bir kez fırçalamak yeterlidir. Özel tüy yapısı nedeniyle dikkatli fırçalama gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Applehead Siamese": {
+    "karakter": "Applehead Siamese kedileri geleneksel Siamese karakterine sahiptir. Yuvarlak kafaları ile dikkat çekerler, çok konuşkan ve sosyal kedilerdir.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Balinese": {
+    "karakter": "Balinese kedileri uzun tüylü Siamese olarak bilinirler. Çok konuşkan, aktif ve sosyal kedilerdir, sahiplerine çok bağlıdırlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Bengal": {
+    "karakter": "Bengal kedileri çok aktif, enerjik ve oyuncu kedilerdir. Vahşi görünümlerine rağmen evcil ve sevgi doludurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Çok aktif oldukları için düzenli oyun ve egzersiz şarttır.",
+    "saglik": "Genel olarak sağlıklıdırlar ama böbrek yetmezliği riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli, protein açısından zengin kuru ve yaş mama kombinasyonu önerilir.",
+    "yasam": "Geniş alanları ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Birman": {
+    "karakter": "Birman kedileri sakin, nazik ve sevgi dolu kedilerdir. Mavi gözleri ve renkli noktaları ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kalp hastalığı (HCM) riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Çocuklu aileler için idealdir."
+  },
+  "Bombay": {
+    "karakter": "Bombay kedileri sakin, nazik ve sevgi dolu kedilerdir. Siyah tüyleri ve bakır gözleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Obeziteye yatkın oldukları için kilo kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "British Shorthair": {
+    "karakter": "British Shorthair kedileri sakin, dengeli ve bağımsız bir yapıya sahiptir. Çok sevgi dolu ama aşırı talepkar değillerdir.",
+    "bakim": "Kısa ve kalın tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Obeziteye yatkın oldukları için kilo kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Tek kişi veya aile ortamı için idealdir. Sessiz ve huzurlu ortamları severler."
+  },
+  "Burmese": {
+    "karakter": "Burmese kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. Sahipleriyle güçlü bağlar kurarlar, çok meraklı ve aktiflerdir.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Burmilla": {
+    "karakter": "Burmilla kedileri sakin, nazik ve sevgi dolu kedilerdir. Persian ve Burmese karışımı olarak bilinirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Calico": {
+    "karakter": "Calico kedileri renkli tüyleri ile dikkat çekerler. Genellikle dişi olurlar, karakterleri tüy rengine göre değişir, genelde sakin ve uyumludurlar.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy rengi genetik özellikler taşır, özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri tüy rengine göre değişir, genelde aile ortamına uygundurlar."
+  },
+  "Canadian Hairless": {
+    "karakter": "Canadian Hairless (Sphynx) kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. Tüysüz yapıları ile dikkat çekerler, çok meraklıdırlar.",
+    "bakim": "Tüyleri olmadığı için cilt bakımı önemlidir. Haftada bir kez banyo yapılmalı ve cilt temizliği yapılmalıdır.",
+    "saglik": "Cilt problemleri ve kalp hastalığı riski taşırlar. Soğuktan korunmaları gerekir.",
+    "mama": "Yüksek kaliteli, protein açısından zengin kuru ve yaş mama kombinasyonu önerilir. Metabolizmaları hızlıdır.",
+    "yasam": "Sıcak ortamları tercih ederler. Apartman yaşamına uygundur. Çok sosyal oldukları için yalnız kalmayı sevmezler."
+  },
+  "Chartreux": {
+    "karakter": "Chartreux kedileri sakin, nazik ve sessiz kedilerdir. Mavi-gri tüyleri ve turuncu gözleri ile dikkat çekerler, çok zeki ve bağımsızdırlar.",
+    "bakim": "Kısa ve yoğun tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak çok sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Tek kişi veya küçük aileler için idealdir."
+  },
+  "Chausie": {
+    "karakter": "Chausie kedileri çok aktif, enerjik ve oyuncu kedilerdir. Vahşi görünümlerine rağmen evcil ve sevgi doludurlar, çok meraklıdırlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Çok aktif oldukları için düzenli oyun ve egzersiz şarttır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Vahşi atalarından gelen güçlü bağışıklık sistemleri vardır.",
+    "mama": "Yüksek kaliteli, protein açısından zengin kuru ve yaş mama kombinasyonu önerilir.",
+    "yasam": "Geniş alanları ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Chinchilla": {
+    "karakter": "Chinchilla kedileri sakin, nazik ve sevgi dolu kedilerdir. Uzun, gümüşi tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Uzun tüyleri günlük fırçalanmalıdır. Göz çevresi temizliği önemlidir. Düzenli banyo yapılmalıdır.",
+    "saglik": "Solunum problemleri, göz hastalıkları ve böbrek yetmezliği riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama önerilir. Tüy topaklarını önlemek için özel formüllü mamalar tercih edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına uygundur. Çocuklu aileler için uygundur ama sessiz ortam sağlanmalıdır."
+  },
+  "Cornish Rex": {
+    "karakter": "Cornish Rex kedileri çok aktif, oyuncu ve sosyal kedilerdir. Kıvırcık tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa ve kıvırcık tüyleri haftada bir kez fırçalamak yeterlidir. Özel tüy yapısı nedeniyle dikkatli fırçalama gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy yapısı nedeniyle cilt problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Cymric": {
+    "karakter": "Cymric kedileri sakin, nazik ve sevgi dolu kedilerdir. Kuyruksuz veya kısa kuyruklu yapıları ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kuyruk yapısı nedeniyle omurga problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Devon Rex": {
+    "karakter": "Devon Rex kedileri çok aktif, oyuncu ve sosyal kedilerdir. Kıvırcık tüyleri ve büyük kulakları ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa ve kıvırcık tüyleri haftada bir kez fırçalamak yeterlidir. Özel tüy yapısı nedeniyle dikkatli fırçalama gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy yapısı nedeniyle cilt problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Dilute Calico": {
+    "karakter": "Dilute Calico kedileri pastel renkli tüyleri ile dikkat çekerler. Genellikle dişi olurlar, karakterleri tüy rengine göre değişir, genelde sakin ve uyumludurlar.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy rengi genetik özellikler taşır, özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri tüy rengine göre değişir, genelde aile ortamına uygundurlar."
+  },
+  "Dilute Tortoiseshell": {
+    "karakter": "Dilute Tortoiseshell kedileri pastel renkli tüyleri ile dikkat çekerler. Genellikle dişi olurlar, karakterleri tüy rengine göre değişir, genelde sakin ve uyumludurlar.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy rengi genetik özellikler taşır, özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri tüy rengine göre değişir, genelde aile ortamına uygundurlar."
+  },
+  "Domestic Long Hair": {
+    "karakter": "Domestic Long Hair kedileri uzun tüylü ev kedileridir. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir, aile ortamına uygundurlar.",
+    "bakim": "Uzun tüyleri günlük fırçalanmalıdır. Tüy topaklarını önlemek için düzenli bakım şarttır. Düzenli banyo yapılmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy uzunluğu nedeniyle tüy topakları riski taşırlar, düzenli bakım önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Tüy topaklarını önlemek için özel formüllü mamalar tercih edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  },
+  "Domestic Medium Hair": {
+    "karakter": "Domestic Medium Hair kedileri orta uzunlukta tüylü ev kedileridir. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir, aile ortamına uygundurlar.",
+    "bakim": "Orta uzunlukta tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  },
+  "Domestic Short Hair": {
+    "karakter": "Domestic Short Hair kedileri kısa tüylü ev kedileridir. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir, aile ortamına uygundurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  },
+  "Egyptian Mau": {
+    "karakter": "Egyptian Mau kedileri çok aktif, oyuncu ve sosyal kedilerdir. Benekli tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Exotic Shorthair": {
+    "karakter": "Exotic Shorthair kedileri sakin, nazik ve sevgi dolu kedilerdir. Persian'a benzer yüz yapısına sahiptirler ama kısa tüylüdürler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Göz çevresi temizliği önemlidir.",
+    "saglik": "Solunum problemleri, göz hastalıkları ve böbrek yetmezliği riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına uygundur. Çocuklu aileler için uygundur ama sessiz ortam sağlanmalıdır."
+  },
+  "Extra-Toes Cat - Hemingway Polydactyl": {
+    "karakter": "Extra-Toes Cat (Polydactyl) kedileri fazla parmaklı yapıları ile dikkat çekerler. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır. Tırnak bakımı önemlidir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Fazla parmak yapısı nedeniyle tırnak bakımı önemlidir, düzenli kontrol gerekir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  },
+  "Havana": {
+    "karakter": "Havana kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. Kahverengi tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Himalayan": {
+    "karakter": "Himalayan kedileri sakin, nazik ve sevgi dolu kedilerdir. Persian ve Siamese karışımı olarak bilinirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Uzun tüyleri günlük fırçalanmalıdır. Göz çevresi temizliği önemlidir. Düzenli banyo yapılmalıdır.",
+    "saglik": "Solunum problemleri, göz hastalıkları ve böbrek yetmezliği riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama önerilir. Tüy topaklarını önlemek için özel formüllü mamalar tercih edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına uygundur. Çocuklu aileler için uygundur ama sessiz ortam sağlanmalıdır."
+  },
+  "Japanese Bobtail": {
+    "karakter": "Japanese Bobtail kedileri aktif, oyuncu ve sosyal kedilerdir. Kısa kuyrukları ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa veya yarı uzun tüyleri haftada 1-2 kez fırçalanmalıdır. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kuyruk yapısı nedeniyle omurga problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Javanese": {
+    "karakter": "Javanese kedileri çok konuşkan, aktif ve sosyal kedilerdir. Uzun tüylü Siamese olarak bilinirler, çok meraklı ve zekidirler.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Korat": {
+    "karakter": "Korat kedileri sakin, nazik ve sevgi dolu kedilerdir. Gümüşi-mavi tüyleri ve yeşil gözleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak çok sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Tek kişi veya küçük aileler için idealdir."
+  },
+  "LaPerm": {
+    "karakter": "LaPerm kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. Kıvırcık tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa veya yarı uzun kıvırcık tüyleri haftada 1-2 kez fırçalanmalıdır. Özel tüy yapısı nedeniyle dikkatli fırçalama gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy yapısı nedeniyle cilt problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Maine Coon": {
+    "karakter": "Maine Coon kedileri dost canlısı, zeki ve oyuncu kedilerdir. 'Yumuşak devler' olarak bilinirler, çok sosyal ve sevgi doludurlar.",
+    "bakim": "Uzun ve kalın tüyleri haftada 2-3 kez fırçalanmalıdır. Özellikle tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar ama kalp hastalığı (HCM) riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Büyük cins oldukları için yüksek kaliteli, büyük cins kediler için formüle edilmiş mamalar önerilir.",
+    "yasam": "Geniş alanları severler ama apartman yaşamına da uyum sağlayabilirler. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Manx": {
+    "karakter": "Manx kedileri sakin, nazik ve sevgi dolu kedilerdir. Kuyruksuz yapıları ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa veya yarı uzun tüyleri haftada 1-2 kez fırçalanmalıdır. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kuyruk yapısı nedeniyle omurga problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Munchkin": {
+    "karakter": "Munchkin kedileri aktif, oyuncu ve sosyal kedilerdir. Kısa bacakları ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kısa bacak yapısı nedeniyle omurga problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Nebelung": {
+    "karakter": "Nebelung kedileri sakin, nazik ve sevgi dolu kedilerdir. Uzun, mavi-gri tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Tek kişi veya küçük aileler için idealdir."
+  },
+  "Norwegian Forest Cat": {
+    "karakter": "Norwegian Forest Cat kedileri sakin, nazik ve sevgi dolu kedilerdir. Uzun, kalın tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Uzun ve kalın tüyleri haftada 2-3 kez fırçalanmalıdır. Özellikle tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kalp hastalığı (HCM) riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Büyük cins oldukları için uygun porsiyon kontrolü yapılmalıdır.",
+    "yasam": "Geniş alanları severler ama apartman yaşamına da uyum sağlayabilirler. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Ocicat": {
+    "karakter": "Ocicat kedileri çok aktif, oyuncu ve sosyal kedilerdir. Vahşi görünümlü benekli tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Oriental Long Hair": {
+    "karakter": "Oriental Long Hair kedileri çok konuşkan, aktif ve sosyal kedilerdir. Uzun tüylü Oriental olarak bilinirler, çok meraklı ve zekidirler.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Oriental Short Hair": {
+    "karakter": "Oriental Short Hair kedileri çok konuşkan, aktif ve sosyal kedilerdir. Kısa tüylü Oriental olarak bilinirler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Oriental Tabby": {
+    "karakter": "Oriental Tabby kedileri çok konuşkan, aktif ve sosyal kedilerdir. Çizgili tüyleri ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Persian": {
+    "karakter": "Persian kedileri sakin, nazik ve sessiz bir yapıya sahiptir. Bağımsız ama sevgi dolu, sessiz ortamları tercih ederler.",
+    "bakim": "Uzun tüyleri günlük fırçalanmalıdır. Göz çevresi temizliği önemlidir. Düzenli banyo yapılmalıdır.",
+    "saglik": "Solunum problemleri, göz hastalıkları ve böbrek yetmezliği riski taşırlar. Düz yüz yapısı nedeniyle nefes alma sorunları olabilir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama önerilir. Tüy topaklarını önlemek için özel formüllü mamalar tercih edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına uygundur. Çocuklu aileler için uygundur ama sessiz ortam sağlanmalıdır."
+  },
+  "Pixiebob": {
+    "karakter": "Pixiebob kedileri sakin, nazik ve sevgi dolu kedilerdir. Vahşi görünümlü tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa veya yarı uzun tüyleri haftada 1-2 kez fırçalanmalıdır. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Ragamuffin": {
+    "karakter": "Ragamuffin kedileri çok sakin, nazik ve sevgi dolu kedilerdir. Ragdoll'a benzer yapıya sahiptirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kalp hastalığı (HCM) riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Büyük cins oldukları için uygun porsiyon kontrolü yapılmalıdır.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Çocuklu aileler için idealdir."
+  },
+  "Ragdoll": {
+    "karakter": "Ragdoll kedileri çok sakin, nazik ve sevgi dolu kedilerdir. İsimlerinden de anlaşılacağı gibi kucağa alınmayı çok severler.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar ama kalp hastalığı (HCM) riski taşırlar. Düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Büyük cins oldukları için uygun porsiyon kontrolü yapılmalıdır.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Çocuklu aileler için idealdir."
+  },
+  "Russian Blue": {
+    "karakter": "Russian Blue kedileri sakin, nazik ve utangaç bir yapıya sahiptir. Yabancılara karşı mesafeli ama sahiplerine çok bağlıdırlar.",
+    "bakim": "Kısa ve yoğun tüyleri haftada bir kez fırçalamak yeterlidir. Düşük bakım gerektiren bir cinstir.",
+    "saglik": "Genel olarak çok sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Sessiz ve huzurlu ortamları tercih ederler. Apartman yaşamına mükemmel uyum sağlarlar. Tek kişi veya küçük aileler için idealdir."
+  },
+  "Scottish Fold": {
+    "karakter": "Scottish Fold kedileri sakin, nazik ve sevgi dolu kedilerdir. Çok sosyal ve oyuncu bir yapıya sahiptirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Kulak temizliği önemlidir.",
+    "saglik": "Kıkırdak sorunları riski taşırlar. Eklem problemleri olabilir, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Eklem sağlığı için özel formüllü mamalar tercih edilebilir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Selkirk Rex": {
+    "karakter": "Selkirk Rex kedileri sakin, nazik ve sevgi dolu kedilerdir. Kıvırcık tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Kısa veya yarı uzun kıvırcık tüyleri haftada 1-2 kez fırçalanmalıdır. Özel tüy yapısı nedeniyle dikkatli fırçalama gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy yapısı nedeniyle cilt problemleri olabilir, düzenli kontrol önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına mükemmel uyum sağlarlar. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Siamese": {
+    "karakter": "Siamese kedileri çok konuşkan, aktif ve sosyal kedilerdir. Sahipleriyle güçlü bağlar kurarlar, çok zeki ve meraklıdırlar.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun ve zihinsel uyarım gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar ama solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Siberian": {
+    "karakter": "Siberian kedileri sakin, nazik ve sevgi dolu kedilerdir. Uzun, kalın tüyleri ile dikkat çekerler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Uzun ve kalın tüyleri haftada 2-3 kez fırçalanmalıdır. Özellikle tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Kalp hastalığı (HCM) riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Büyük cins oldukları için uygun porsiyon kontrolü yapılmalıdır.",
+    "yasam": "Geniş alanları severler ama apartman yaşamına da uyum sağlayabilirler. Çocuklu aileler ve diğer evcil hayvanlarla uyumludurlar."
+  },
+  "Silver": {
+    "karakter": "Silver kedileri gümüşi tüyleri ile dikkat çekerler. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir, aile ortamına uygundurlar.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy rengi genetik özellikler taşır, özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  },
+  "Singapura": {
+    "karakter": "Singapura kedileri çok aktif, oyuncu ve sosyal kedilerdir. Küçük boyutları ile dikkat çekerler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Bilinen özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Küçük boyutları nedeniyle porsiyon kontrolü önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Snowshoe": {
+    "karakter": "Snowshoe kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. Siamese benzeri yapıya sahiptirler, çok meraklı ve zekidirler.",
+    "bakim": "Kısa tüyleri haftada bir kez fırçalamak yeterlidir. Aktif oldukları için düzenli oyun gerektirirler.",
+    "saglik": "Genel olarak sağlıklıdırlar. Solunum problemleri ve göz hastalıkları riski taşırlar.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Çok sosyal oldukları için yalnız kalmayı sevmezler. Apartman yaşamına uygundur. Çocuklu aileler için idealdir."
+  },
+  "Somali": {
+    "karakter": "Somali kedileri çok aktif, meraklı ve zeki kedilerdir. Uzun tüylü Abyssinian olarak bilinirler, çok sosyal ve oyuncudurlar.",
+    "bakim": "Yarı uzun tüyleri haftada 2-3 kez fırçalanmalıdır. Tüy dökme mevsiminde daha sık bakım gerekir.",
+    "saglik": "Genel olarak sağlıklıdırlar. Periodontal hastalık ve böbrek yetmezliği riski taşırlar, düzenli veteriner kontrolü önemlidir.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Aktif oldukları için yeterli beslenme önemlidir.",
+    "yasam": "Aktif oldukları için geniş alan ve oyun imkanı severler. Apartman yaşamına uyum sağlayabilirler ama aktif olmaları için yeterli alan sağlanmalıdır."
+  },
+  "Sphynx - Hairless Cat": {
+    "karakter": "Sphynx kedileri çok sosyal, sevgi dolu ve oyuncu kedilerdir. İnsanlarla güçlü bağlar kurarlar, çok meraklıdırlar.",
+    "bakim": "Tüyleri olmadığı için cilt bakımı önemlidir. Haftada bir kez banyo yapılmalı ve cilt temizliği yapılmalıdır.",
+    "saglik": "Cilt problemleri ve kalp hastalığı riski taşırlar. Soğuktan korunmaları gerekir.",
+    "mama": "Yüksek kaliteli, protein açısından zengin kuru ve yaş mama kombinasyonu önerilir. Metabolizmaları hızlıdır.",
+    "yasam": "Sıcak ortamları tercih ederler. Apartman yaşamına uygundur. Çok sosyal oldukları için yalnız kalmayı sevmezler."
+  },
+  "Tabby": {
+    "karakter": "Tabby kedileri çizgili tüyleri ile dikkat çekerler. Karakterleri değişkendir, genelde sakin ve uyumlu kedilerdir, aile ortamına uygundurlar.",
+    "bakim": "Tüy uzunluğuna göre bakım değişir. Kısa tüylü ise haftada bir, uzun tüylü ise haftada 2-3 kez fırçalanmalıdır.",
+    "saglik": "Genel olarak sağlıklıdırlar. Tüy deseni genetik özellikler taşır, özel sağlık sorunları yoktur.",
+    "mama": "Yüksek kaliteli kuru ve yaş mama kombinasyonu önerilir. Porsiyon kontrolüne dikkat edilmelidir.",
+    "yasam": "Apartman ve ev yaşamına uyum sağlarlar. Karakterleri değişkendir, genelde aile ortamına uygundurlar."
+  }
+}
