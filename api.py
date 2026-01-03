@@ -135,10 +135,20 @@ def load_models():
         # Create model architecture
         model = models.resnet50(pretrained=False)
         num_ftrs = model.fc.in_features
-        model.fc = nn.Sequential(
-            nn.Dropout(0.5),
-            nn.Linear(num_ftrs, num_classes)
-        )
+        
+        # Check if checkpoint uses Sequential (with dropout) or simple Linear
+        state_dict = checkpoint['model_state_dict']
+        if 'fc.weight' in state_dict:
+            # Simple Linear layer
+            print("ℹ️ Model yapısı: Simple Linear (fc.weight bulundu)")
+            model.fc = nn.Linear(num_ftrs, num_classes)
+        else:
+            # Sequential (Dropout + Linear)
+            print("ℹ️ Model yapısı: Sequential (fc.1.weight bekleniyor)")
+            model.fc = nn.Sequential(
+                nn.Dropout(0.5),
+                nn.Linear(num_ftrs, num_classes)
+            )
         model.load_state_dict(checkpoint['model_state_dict'])
         model = model.to(device)
         model.eval()
