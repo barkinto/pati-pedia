@@ -44,8 +44,8 @@ RUN mkdir -p runs/resnet50_v2/weights
 RUN mkdir -p runs/optimal_ensemble
 
 # Copy the trained models (will be added by user)
-COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
-COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
+# COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
+# COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
 
 # Copy cat breed info database
 COPY cat_breed_info.json .
