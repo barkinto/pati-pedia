@@ -43,30 +43,36 @@ app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
 CORS(app)  # Enable CORS for React frontend
 
 # Model paths
-# Model paths management
-POSSIBLE_MODEL_PATHS = [
-    'runs/resnet50_v2/weights/best.pth',
-    'runs/resnet50/weights/best.pth',
-    'best.pth',
-    '/app/best.pth'
-]
-MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default
-found_valid_model = False
-for path in POSSIBLE_MODEL_PATHS:
-    if os.path.exists(path):
-        # Check if file is larger than 1MB (to avoid LFS pointers or empty files)
-        if os.path.getsize(path) > 1024 * 1024:  # 1MB
-            MODEL_PATH = path
-            found_valid_model = True
-            print(f"✅ Geçerli model bulundu ({os.path.getsize(path)/1024/1024:.2f} MB): {MODEL_PATH}")
-            break
-        else:
-            print(f"⚠️ Dosya bulundu ama boyutu çok küçük (LFS pointer olabilir): {path} ({os.path.getsize(path)} bytes)")
+from huggingface_hub import hf_hub_download
 
-if not found_valid_model:
-    print(f"❌ Hiçbir geçerli model dosyası bulunamadı! Aranan yollar: {POSSIBLE_MODEL_PATHS}")
-    # List current directory to help debugging
-    print(f"📂 Mevcut dizin ({os.getcwd()}) içeriği: {os.listdir('.' if os.path.exists('.') else '/')}")
+# Model paths management
+MODEL_REPO = "barkinto/kedi-modeli"
+MODEL_FILENAME = "best.pth"
+
+print(f"🔄 Model dış kaynaktan indiriliyor: {MODEL_REPO}/{MODEL_FILENAME}...")
+try:
+    # Download model from HF Hub (cache handled automatically)
+    MODEL_PATH = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
+    print(f"✅ Model başarıyla indirildi: {MODEL_PATH}")
+except Exception as e:
+    print(f"⚠️ Model indirme hatası: {e}")
+    # Fallback to local check
+    POSSIBLE_MODEL_PATHS = [
+        'runs/resnet50_v2/weights/best.pth',
+        'runs/resnet50/weights/best.pth',
+        'best.pth',
+        '/app/best.pth'
+    ]
+    MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default fallback
+    found_valid_model = False
+    for path in POSSIBLE_MODEL_PATHS:
+        if os.path.exists(path):
+            # Check if file is larger than 1MB
+            if os.path.getsize(path) > 1024 * 1024:
+                MODEL_PATH = path
+                found_valid_model = True
+                print(f"✅ Yerel model bulundu: {MODEL_PATH}")
+                break
 YOLO_MODEL_PATH = 'yolo11n.pt'
 
 # Global variables for loaded models

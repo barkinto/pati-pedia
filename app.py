@@ -8,19 +8,28 @@ from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
 import api
 
+from huggingface_hub import hf_hub_download
+
 # Define MODEL_PATH with fallback
-# Define MODEL_PATH with fallback
-POSSIBLE_MODEL_PATHS = [
-    'runs/resnet50_v2/weights/best.pth',
-    'runs/resnet50/weights/best.pth',
-    'best.pth',
-    '/app/best.pth'
-]
-MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
-for path in POSSIBLE_MODEL_PATHS:
-    if os.path.exists(path) and os.path.getsize(path) > 1024 * 1024: # > 1MB
-        MODEL_PATH = path
-        break
+MODEL_REPO = "barkinto/kedi-modeli"
+MODEL_FILENAME = "best.pth"
+
+try:
+    # Try to get the path from HF Hub cache
+    MODEL_PATH = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
+except:
+    # Fallback to local search
+    POSSIBLE_MODEL_PATHS = [
+        'runs/resnet50_v2/weights/best.pth',
+        'runs/resnet50/weights/best.pth',
+        'best.pth',
+        '/app/best.pth'
+    ]
+    MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
+    for path in POSSIBLE_MODEL_PATHS:
+        if os.path.exists(path) and os.path.getsize(path) > 1024 * 1024:
+            MODEL_PATH = path
+            break
 
 # Flask app
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
