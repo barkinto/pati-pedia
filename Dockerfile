@@ -26,6 +26,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
+COPY app.py .
 COPY app_resnet50.py .
 COPY api.py .
 COPY predict_resnet50.py .
