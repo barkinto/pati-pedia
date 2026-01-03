@@ -18,7 +18,7 @@ POSSIBLE_MODEL_PATHS = [
 ]
 MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
 for path in POSSIBLE_MODEL_PATHS:
-    if os.path.exists(path):
+    if os.path.exists(path) and os.path.getsize(path) > 1024 * 1024: # > 1MB
         MODEL_PATH = path
         break
 

@@ -51,13 +51,20 @@ POSSIBLE_MODEL_PATHS = [
     '/app/best.pth'
 ]
 MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default
+found_valid_model = False
 for path in POSSIBLE_MODEL_PATHS:
     if os.path.exists(path):
-        MODEL_PATH = path
-        print(f"✅ Model bulundu: {MODEL_PATH}")
-        break
-else:
-    print(f"❌ Model bulunamadı! Aranan yollar: {POSSIBLE_MODEL_PATHS}")
+        # Check if file is larger than 1MB (to avoid LFS pointers or empty files)
+        if os.path.getsize(path) > 1024 * 1024:  # 1MB
+            MODEL_PATH = path
+            found_valid_model = True
+            print(f"✅ Geçerli model bulundu ({os.path.getsize(path)/1024/1024:.2f} MB): {MODEL_PATH}")
+            break
+        else:
+            print(f"⚠️ Dosya bulundu ama boyutu çok küçük (LFS pointer olabilir): {path} ({os.path.getsize(path)} bytes)")
+
+if not found_valid_model:
+    print(f"❌ Hiçbir geçerli model dosyası bulunamadı! Aranan yollar: {POSSIBLE_MODEL_PATHS}")
     # List current directory to help debugging
     print(f"📂 Mevcut dizin ({os.getcwd()}) içeriği: {os.listdir('.' if os.path.exists('.') else '/')}")
 YOLO_MODEL_PATH = 'yolo11n.pt'
