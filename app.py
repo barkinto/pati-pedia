@@ -9,9 +9,18 @@ from flask_cors import CORS
 import api
 
 # Define MODEL_PATH with fallback
+# Define MODEL_PATH with fallback
+POSSIBLE_MODEL_PATHS = [
+    'runs/resnet50_v2/weights/best.pth',
+    'runs/resnet50/weights/best.pth',
+    'best.pth',
+    '/app/best.pth'
+]
 MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
-if not os.path.exists(MODEL_PATH) and os.path.exists('best.pth'):
-    MODEL_PATH = 'best.pth'
+for path in POSSIBLE_MODEL_PATHS:
+    if os.path.exists(path):
+        MODEL_PATH = path
+        break
 
 # Flask app
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='')

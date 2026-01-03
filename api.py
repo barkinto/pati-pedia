@@ -43,10 +43,23 @@ app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
 CORS(app)  # Enable CORS for React frontend
 
 # Model paths
-MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
-if not os.path.exists(MODEL_PATH) and os.path.exists('best.pth'):
-    MODEL_PATH = 'best.pth'
-    print(f"⚠️ Model root dizinde bulundu, kullanılıyor: {MODEL_PATH}")
+# Model paths management
+POSSIBLE_MODEL_PATHS = [
+    'runs/resnet50_v2/weights/best.pth',
+    'runs/resnet50/weights/best.pth',
+    'best.pth',
+    '/app/best.pth'
+]
+MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default
+for path in POSSIBLE_MODEL_PATHS:
+    if os.path.exists(path):
+        MODEL_PATH = path
+        print(f"✅ Model bulundu: {MODEL_PATH}")
+        break
+else:
+    print(f"❌ Model bulunamadı! Aranan yollar: {POSSIBLE_MODEL_PATHS}")
+    # List current directory to help debugging
+    print(f"📂 Mevcut dizin ({os.getcwd()}) içeriği: {os.listdir('.' if os.path.exists('.') else '/')}")
 YOLO_MODEL_PATH = 'yolo11n.pt'
 
 # Global variables for loaded models
