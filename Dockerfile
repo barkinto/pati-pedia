@@ -25,35 +25,8 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY app.py .
-COPY app_resnet50.py .
-COPY api.py .
-COPY predict_resnet50.py .
-COPY ensemble_model.py .
-COPY transformer_models.py .
-COPY augmentation_utils.py .
-COPY cat_breed_info.py .
-COPY show_classes.py .
-COPY yolo11n.pt .
-
-# Copy Streamlit config
-COPY .streamlit .streamlit
-
-# Create necessary directories
-RUN mkdir -p runs/resnet50_v2/weights
-RUN mkdir -p runs/optimal_ensemble
-
-# Copy the trained models (uploaded manually by user to root)
-COPY best.pth .
-# COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
-# COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
-
-# Copy cat breed info database
-COPY cat_breed_info.json .
-
-# Copy frontend build
-COPY frontend/dist ./frontend/dist
+# Copy all application files
+COPY . .
 
 # Expose port 7860 (Hugging Face Spaces default)
 EXPOSE 7860
