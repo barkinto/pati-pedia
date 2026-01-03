@@ -43,7 +43,8 @@ COPY .streamlit .streamlit
 RUN mkdir -p runs/resnet50_v2/weights
 RUN mkdir -p runs/optimal_ensemble
 
-# Copy the trained models (will be added by user)
+# Copy the trained models (uploaded manually by user to root)
+COPY best.pth .
 # COPY runs/resnet50_v2/weights/best.pth runs/resnet50_v2/weights/
 # COPY runs/optimal_ensemble/optimal_ensemble_final.pth runs/optimal_ensemble/
 
