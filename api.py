@@ -698,10 +698,17 @@ Her bölüm 1-2 cümle, toplam maksimum 150 kelime."""
         
         # Call Gemini Vision API
         # Use gemini-1.5-flash (same as text generation)
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
+        # Clean API Key (remove spaces/newlines)
+        api_key = api_key.strip()
+        if not api_key:
+             return None
+
+        # Call Gemini Vision API
+        # Use simple URL with query param as backup
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={api_key}"
         headers = {
-            'Content-Type': 'application/json',
-            'X-goog-api-key': api_key
+            'Content-Type': 'application/json'
+            # 'X-goog-api-key': api_key # Query param is enough and safer
         }
         data = {
             "contents": [
