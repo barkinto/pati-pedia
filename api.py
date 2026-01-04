@@ -659,7 +659,16 @@ def analyze_cat_image_with_gemini(image_base64, breed_name=None):
         time.sleep(wait_time)
     
     try:
-        api_key = os.getenv('GEMINI_API_KEY', 'AIzaSyD919v-LWT423ZpSX1MHPcjnlNsVuQW7PQ')
+        api_key = os.getenv('GEMINI_API_KEY')
+        
+        # Debug: Print loaded key status (masked)
+        if api_key:
+            masked_key = f"{api_key[:5]}...{api_key[-4:]}" if len(api_key) > 10 else "SHORT_KEY"
+            print(f"🔑 DEBUG (Vision): Loaded GEMINI_API_KEY: {masked_key}")
+        else:
+            print("❌ DEBUG (Vision): GEMINI_API_KEY bulunamadı (Environment variable boş)")
+            print("🔎 DEBUG (Vision) - Env keys:", list(os.environ.keys()))
+            
         if not api_key:
             return None
         
