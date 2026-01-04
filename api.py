@@ -49,21 +49,27 @@ from huggingface_hub import hf_hub_download
 MODEL_REPO = "barkinto/kedi-modeli"
 MODEL_FILENAME = "best.pth"
 
-print(f"🔄 Model dış kaynaktan indiriliyor: {MODEL_REPO}/{MODEL_FILENAME}...")
-try:
-    # Download model from HF Hub (cache handled automatically)
-    MODEL_PATH = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
-    print(f"✅ Model başarıyla indirildi: {MODEL_PATH}")
-except Exception as e:
-    print(f"⚠️ Model indirme hatası: {e}")
-    # Fallback to local check
-    POSSIBLE_MODEL_PATHS = [
-        'runs/resnet50_v2/weights/best.pth',
-        'runs/resnet50/weights/best.pth',
-        'best.pth',
-        '/app/best.pth'
-    ]
-    MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default fallback
+# Prioritize LOCAL model (Pre-deployment version)
+MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'
+
+if os.path.exists(MODEL_PATH):
+    print(f"✅ Yerel model (Deploy öncesi) bulundu ve kullanılıyor: {MODEL_PATH}")
+else:
+    print(f"⚠️ Yerel model bulunamadı: {MODEL_PATH}")
+    print(f"🔄 Model dış kaynaktan indiriliyor: {MODEL_REPO}/{MODEL_FILENAME}...")
+    try:
+        # Download model from HF Hub (cache handled automatically)
+        MODEL_PATH = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
+        print(f"✅ Model başarıyla indirildi: {MODEL_PATH}")
+    except Exception as e:
+        print(f"⚠️ Model indirme hatası: {e}")
+        # Fallback to local check
+        POSSIBLE_MODEL_PATHS = [
+            'runs/resnet50/weights/best.pth',
+            'best.pth',
+            '/app/best.pth'
+        ]
+        MODEL_PATH = 'runs/resnet50_v2/weights/best.pth'  # Default fallback
     found_valid_model = False
     for path in POSSIBLE_MODEL_PATHS:
         if os.path.exists(path):
