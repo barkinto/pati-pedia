@@ -525,7 +525,13 @@ def get_breed_info_from_gemini(breed_name):
         api_key = os.getenv('GEMINI_API_KEY', 'AIzaSyD919v-LWT423ZpSX1MHPcjnlNsVuQW7PQ')
         if not api_key:
             print("⚠️ GEMINI_API_KEY environment variable not set")
+            # HARD DEBUG: Check all env vars
+            print("🔎 DEBUG - Environment keys:", list(os.environ.keys()))
             return None
+        
+        # Debug: Print loaded key (masked)
+        masked_key = f"{api_key[:5]}...{api_key[-4:]}" if api_key and len(api_key) > 10 else "INVALID"
+        print(f"🔑 DEBUG: Loaded GEMINI_API_KEY: {masked_key}")
         
         # Update last call time
         last_api_call_time['breed_info'] = time.time()
