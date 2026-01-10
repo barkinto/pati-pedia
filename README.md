@@ -19,6 +19,7 @@ Yapay zeka destekli, 59 farklı kedi cinsini tanıyabilen modern web uygulaması
 - 🧠 **İki Aşamalı AI**: YOLO11 kedi tespiti + ResNet50 cins sınıflandırma
 - 🛡️ **Vahşi Kedi Tespiti**: Entropi analizi ile vahşi kedi uyarısı
 - 📚 **Irk Ansiklopedisi**: Her cins için detaylı sağlık, beslenme, bakım ve davranış bilgileri
+- 🔥 **Grad-CAM XAI**: Modelin neden belirli cins tahmini yaptığını görselleştir (Açıklanabilir AI)
 - 🎨 **Modern Arayüz**: PatiPedia tasarımı ile kullanıcı dostu deneyim
 - ⚡ **Hızlı Analiz**: CUDA destekli GPU hızlandırma
 
@@ -52,6 +53,12 @@ Yapay zeka destekli, 59 farklı kedi cinsini tanıyabilen modern web uygulaması
 - **Threshold**: 0.9
 - **Purpose**: Vahşi kedi tespit ve uyarı
 
+### 4. Grad-CAM (Explainable AI - XAI)
+- **Layer**: ResNet50 layer4[-1]
+- **Purpose**: Model kararlarını görselleştir (hangi bölgelere baktığını göster)
+- **Output**: Isı haritası (heatmap) overlay
+- **Documentation**: [GRADCAM_GUIDE.md](GRADCAM_GUIDE.md)
+
 ## 📊 Performans
 
 - **Total Inference**: ~200ms (YOLO 50ms + ResNet50 100ms + overhead)
@@ -81,7 +88,35 @@ Yapay zeka destekli, 59 farklı kedi cinsini tanıyabilen modern web uygulaması
 
 Abyssinian, American Bobtail, American Curl, American Shorthair, American Wirehair, Applehead Siamese, Balinese, Bengal, Birman, Bombay, British Shorthair, Burmese, Burmilla, Calico, Canadian Hairless, Chartreux, Chausie, Chinchilla, Cornish Rex, Cymric, Devon Rex, Dilute Calico, Dilute Tortoiseshell, Domestic Long Hair, Domestic Medium Hair, Domestic Short Hair, Egyptian Mau, Exotic Shorthair, Extra-Toes Cat, Havana, Himalayan, Japanese Bobtail, Javanese, Korat, LaPerm, Maine Coon, Manx, Munchkin, Nebelung, Norwegian Forest Cat, Ocicat, Oriental Long Hair, Oriental Short Hair, Oriental Tabby, Persian, Pixiebob, Ragamuffin, Ragdoll, Russian Blue, Scottish Fold, Selkirk Rex, Siamese, Siberian, Silver, Singapura, Snowshoe, Somali, Sphynx, Tabby
 
-## 👨‍💻 Geliştirici
+## � API Endpoints
+
+**Flask API** (Backend - http://localhost:5001)
+
+```
+GET  /api/health              # Sistem durumu kontrolü
+POST /api/predict             # Kedi cinsi tahmini
+POST /api/gradcam             # Grad-CAM görselleştirmesi (XAI)
+GET  /api/classes             # Tüm kedi cinsi listesi
+POST /api/breed-info          # Gemini AI - Cins bilgisi
+POST /api/analyze-cat         # Gemini Vision - Görsel analizi
+```
+
+**Grad-CAM örneği:**
+```bash
+curl -X POST http://localhost:5001/api/gradcam \
+  -F "image=@kedi.jpg"
+  
+# Response:
+{
+  "success": true,
+  "predicted_class": "British Shorthair",
+  "confidence": 85.23,
+  "gradcam_image": "data:image/png;base64,...",
+  "explanation": "🔥 Grad-CAM Görselleştirmesi..."
+}
+```
+
+## �👨‍💻 Geliştirici
 
 **Berke Gazioğlu**
 - GitHub: [@berkegazioglu](https://github.com/berkegazioglu)

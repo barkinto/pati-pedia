@@ -13,6 +13,12 @@ import os
 import numpy as np
 
 try:
+    from gradcam import GradCAM, image_to_base64
+    GRADCAM_AVAILABLE = True
+except:
+    GRADCAM_AVAILABLE = False
+
+try:
     from ultralytics import YOLO
     YOLO_AVAILABLE = True
 except:
@@ -247,7 +253,8 @@ def predict_breed(model, image, class_names, device, top_k=5):
         for prob, idx in zip(top_probs[0], top_indices[0]):
             results.append({
                 'breed': class_names[idx],
-                'confidence': prob.item() * 100
+                'confidence': prob.item() * 100,
+                'class_idx': idx.item()  # Add class index for Grad-CAM
             })
         
         # Return results and entropy for uncertainty detection
@@ -517,6 +524,44 @@ def main():
                     st.info("ℹ️ Orta düzey güvenle tahmin edildi.")
                 else:
                     st.warning("⚠️ Düşük güven - Daha net fotoğraf deneyin.")
+            
+            # Grad-CAM Visualization
+            if GRADCAM_AVAILABLE and not is_wild_cat:
+                st.markdown("---")
+                st.markdown("### 🔥 Grad-CAM Görselleştirmesi")
+                st.info("🎯 Kırmızı bölgeler, modelin kedi cinsini belirlerken odaklandığı alanları gösterir.")
+                
+                try:
+                    # Initialize Grad-CAM for this model
+                    gradcam = GradCAM(model, model.layer4[-1])
+                    
+                    # Prepare image for grad-cam
+                    transform = transforms.Compose([
+                        transforms.Resize(int(224 * 1.15)),
+                        transforms.CenterCrop(224),
+                        transforms.ToTensor(),
+                        transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                                           std=[0.229, 0.224, 0.225])
+                    ])
+                    
+                    input_tensor = transform(image).unsqueeze(0).to(device)
+                    predicted_class = results[0]['class_idx']
+                    
+                    # Generate Grad-CAM
+                    cam = gradcam.generate_cam(input_tensor, predicted_class, device=device)
+                    overlay = gradcam.overlay_cam_on_image(image, cam, alpha=0.4)
+                    
+                    # Display
+                    col_orig, col_gradcam = st.columns(2)
+                    with col_orig:
+                        st.image(image, caption="Orijinal Görsel", use_container_width=True)
+                    with col_gradcam:
+                        st.image(overlay, caption="Grad-CAM Görselleştirme", use_container_width=True)
+                    
+                    st.caption("🔍 Model, hangi bölgelere odaklandığını bu ısı haritası ile gösterir. (Açıklanabilir AI)")
+                    
+                except Exception as e:
+                    st.warning(f"⚠️ Grad-CAM görselleştirmesi yapılırken hata: {e}")
             
             # Irk bilgisi kartları (sadece ev kedileri için ve yüksek güven varsa)
             if not is_wild_cat and BREED_INFO_AVAILABLE and results[0]['confidence'] > 40:

@@ -20,6 +20,13 @@ from functools import lru_cache
 from collections import defaultdict
 from dotenv import load_dotenv
 
+# Import Grad-CAM for model interpretability
+try:
+    from gradcam import GradCAM, SalienceMap, image_to_base64
+    GRADCAM_AVAILABLE = True
+except:
+    GRADCAM_AVAILABLE = False
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -86,6 +93,7 @@ model = None
 class_names = None
 device = None
 yolo_model = None
+gradcam_handler = None  # Grad-CAM handler
 
 # Cache for Gemini API responses (breed name -> (response, timestamp))
 gemini_cache = {}
@@ -160,6 +168,17 @@ def load_models():
         model.eval()
         
         print(f"✅ ResNet50 model loaded ({num_classes} classes)")
+        
+        # Initialize Grad-CAM if available
+        global gradcam_handler
+        if GRADCAM_AVAILABLE:
+            try:
+                gradcam_handler = GradCAM(model, model.layer4[-1])
+                print("✅ Grad-CAM initialized for model interpretability")
+            except Exception as e:
+                print(f"⚠️ Grad-CAM initialization failed: {e}")
+                gradcam_handler = None
+        
         return True
     except Exception as e:
         print(f"❌ Error loading model: {e}")
@@ -414,6 +433,71 @@ def predict():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/gradcam', methods=['POST'])
+def get_gradcam_visualization():
+    """
+    Generate Grad-CAM visualization for model interpretability
+    Shows which parts of the image the model focused on for prediction
+    """
+    if gradcam_handler is None:
+        return jsonify({
+            'error': 'Grad-CAM mevcut değil',
+            'available': False
+        }), 400
+    
+    if model is None or class_names is None:
+        return jsonify({'error': 'Model yüklenmedi'}), 500
+    
+    try:
+        # Get image from request
+        if 'image' not in request.files:
+            return jsonify({'error': 'Fotoğraf gerekli'}), 400
+        
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'error': 'Fotoğraf seçilmedi'}), 400
+        
+        # Load image
+        image = Image.open(file.stream).convert('RGB')
+        
+        # Get model prediction first
+        transform = transforms.Compose([
+            transforms.Resize(int(224 * 1.15)),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                               std=[0.229, 0.224, 0.225])
+        ])
+        
+        input_tensor = transform(image).unsqueeze(0).to(device)
+        
+        with torch.no_grad():
+            output = model(input_tensor)
+            probs = torch.softmax(output, dim=1)
+            predicted_class = output.argmax(dim=1).item()
+            confidence = probs[0, predicted_class].item() * 100
+        
+        # Generate Grad-CAM
+        cam = gradcam_handler.generate_cam(input_tensor, predicted_class, device=device)
+        
+        # Create visualization
+        overlay_image = gradcam_handler.overlay_cam_on_image(image, cam, alpha=0.4)
+        
+        # Convert to base64 for JSON response
+        overlay_base64 = image_to_base64(overlay_image)
+        
+        return jsonify({
+            'success': True,
+            'predicted_class': class_names[predicted_class],
+            'confidence': round(confidence, 2),
+            'gradcam_image': overlay_base64,
+            'explanation': f"🔥 Grad-CAM Görselleştirmesi: Kırmızı bölgeler modelin '{class_names[predicted_class]}' tahmini için odaklandığı alanları gösterir."
+        })
+        
+    except Exception as e:
+        return jsonify({'error': f'Grad-CAM hata: {str(e)}'}), 500
 
 
 @app.route('/api/classes', methods=['GET'])
@@ -850,6 +934,7 @@ if __name__ == '__main__':
             print("📡 API endpoints:")
             print("   - GET  /api/health")
             print("   - POST /api/predict")
+            print("   - POST /api/gradcam (Grad-CAM görselleştirmesi)")
             print("   - GET  /api/classes")
             print("   - POST /api/breed-info (Gemini AI - Kedi cinsi bilgisi)")
             print("   - POST /api/analyze-cat (Gemini Vision - Fotoğraf analizi)")
@@ -857,6 +942,10 @@ if __name__ == '__main__':
                 print("   ✅ Gemini AI hazır (GEMINI_API_KEY gerekli)")
             else:
                 print("   ⚠️  Gemini AI yüklü değil")
+            if GRADCAM_AVAILABLE:
+                print("   ✅ Grad-CAM XAI modülü hazır")
+            else:
+                print("   ⚠️  Grad-CAM mevcut değil")
             
             app.run(host='0.0.0.0', port=5001, debug=False)
         else:
