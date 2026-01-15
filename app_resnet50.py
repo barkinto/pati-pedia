@@ -13,7 +13,7 @@ import os
 import numpy as np
 
 try:
-    from gradcam import GradCAM, image_to_base64
+    from gradcam import GradCAM, SalienceMap, image_to_base64
     GRADCAM_AVAILABLE = True
 except:
     GRADCAM_AVAILABLE = False
@@ -525,19 +525,18 @@ def main():
                 else:
                     st.warning("⚠️ Düşük güven - Daha net fotoğraf deneyin.")
             
-            # Grad-CAM Visualization
+            # Explainable AI Visualization (Grad-CAM & Saliency Map)
             if GRADCAM_AVAILABLE and not is_wild_cat:
                 st.markdown("---")
-                st.markdown("### 🔥 Grad-CAM Görselleştirmesi")
-                st.info("🎯 Kırmızı bölgeler, modelin kedi cinsini belirlerken odaklandığı alanları gösterir.")
+                st.markdown("### 🧠 Açıklanabilir Yapay Zeka (XAI)")
+                st.info("Kedi cinsi tahmininin neden yapıldığını görselleştiren yöntemler.")
                 
                 try:
-                    # Initialize Grad-CAM for this model
-                    gradcam = GradCAM(model, model.layer4[-1])
+                    from gradcam import GradCAM, SalienceMap
                     
-                    # Prepare image for grad-cam
+                    # Prepare image for visualizers
                     transform = transforms.Compose([
-                        transforms.Resize(int(224 * 1.15)),
+                        transforms.Resize(256),
                         transforms.CenterCrop(224),
                         transforms.ToTensor(),
                         transforms.Normalize(mean=[0.485, 0.456, 0.406], 
@@ -547,21 +546,57 @@ def main():
                     input_tensor = transform(image).unsqueeze(0).to(device)
                     predicted_class = results[0]['class_idx']
                     
-                    # Generate Grad-CAM
-                    cam = gradcam.generate_cam(input_tensor, predicted_class, device=device)
-                    overlay = gradcam.overlay_cam_on_image(image, cam, alpha=0.4)
+                    # 1. Generate Grad-CAM
+                    gradcam = GradCAM(model, model.layer4[-1])
+                    cam = gradcam.generate_cam(input_tensor.clone(), predicted_class, device=device)
+                    overlay_gradcam = gradcam.overlay_cam_on_image(image, cam, alpha=0.5)
                     
-                    # Display
-                    col_orig, col_gradcam = st.columns(2)
-                    with col_orig:
-                        st.image(image, caption="Orijinal Görsel", use_container_width=True)
-                    with col_gradcam:
-                        st.image(overlay, caption="Grad-CAM Görselleştirme", use_container_width=True)
+                    # 2. Generate Saliency Map (SmoothGrad - Akademik Standart)
+                    saliency = SalienceMap(n_samples=30, noise_std=0.1)
+                    saliency_map = saliency.generate_saliency(
+                        input_tensor.clone(), model, device=device, 
+                        target_class=predicted_class, 
+                        gradcam_mask=cam  # Grad-CAM odak bölgesi ile sınırla
+                    )
+                    overlay_saliency = saliency.visualize_saliency(saliency_map, original_image=image, use_edges=True)
                     
-                    st.caption("🔍 Model, hangi bölgelere odaklandığını bu ısı haritası ile gösterir. (Açıklanabilir AI)")
+                    # Display - 3 Column Layout
+                    st.markdown("#### 📊 Görselleştirmeler")
+                    
+                    col1, col2, col3 = st.columns(3)
+                    
+                    with col1:
+                        st.markdown("**1. Orijinal Görsel**")
+                        st.image(image, use_container_width=True)
+                        
+                    with col2:
+                        st.markdown("**2. Grad-CAM**")
+                        st.image(overlay_gradcam, use_container_width=True)
+                        st.caption("Modelin odaklandığı semantik bölge")
+                        
+                    with col3:
+                        st.markdown("**3. SmoothGrad Saliency**")
+                        st.image(overlay_saliency, use_container_width=True)
+                        st.caption("Kararı etkileyen pikseller")
+                    
+                    with st.expander("ℹ️ Yöntemler Hakkında Detaylı Bilgi"):
+                        st.markdown("""
+                        **Grad-CAM (Gradient-weighted Class Activation Mapping):**
+                        Modelin son katmanlarındaki aktivasyonlara bakarak, "nerede" kedi özelliği gördüğünü ısı haritası olarak gösterir. Bölgesel ve semantik sonuçlar verir.
+                        
+                        **SmoothGrad Saliency Map:**
+                        Vanilla Saliency gürültülü olduğu için SmoothGrad (Smilkov et al., 2017) tabanlı görselleştirme kullanılmıştır.
+                        - 30 gürültülü örnek üzerinden ortalama alınır
+                        - Grad-CAM odak bölgesi ile sınırlandırılmıştır
+                        - Sobel kenar farkındalığı ile anatomik detaylar vurgulanır
+                        
+                        📌 *Saliency tek başına değil, Grad-CAM ile birlikte yorumlanmalıdır.*
+                        """)
                     
                 except Exception as e:
-                    st.warning(f"⚠️ Grad-CAM görselleştirmesi yapılırken hata: {e}")
+                    st.warning(f"⚠️ Görselleştirme hatası: {e}")
+                    # Hata detayını göster (debug için)
+                    st.exception(e)
             
             # Irk bilgisi kartları (sadece ev kedileri için ve yüksek güven varsa)
             if not is_wild_cat and BREED_INFO_AVAILABLE and results[0]['confidence'] > 40:

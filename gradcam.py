@@ -159,64 +159,346 @@ class GradCAM:
         return overlay, confidence
 
 
-class SalienceMap:
+class GuidedBackpropagation:
     """
-    Salience Map (Saliency Maps)
-    Giriş görseline göre gradient hesaplayarak hangi piksellerin önemli olduğunu gösterir
+    Guided Backpropagation
+    ReLU katmanlarında sadece pozitif gradyanları geri yayarak
+    net kenar çizgileri elde eder.
     """
     
-    def __init__(self):
-        pass
-    
-    def generate(self, image_path, model, device='cuda'):
-        """
-        Salience map oluştur
+    def __init__(self, model):
+        self.model = model
+        self.gradients = None
+        self.forward_relu_outputs = []
+        self.hooks = []
         
-        Args:
-            image_path: Görsel dosyası yolu
-            model: ResNet50 modeli
-            device: 'cuda' veya 'cpu'
+        # Model'daki tüm ReLU'ları bul ve hook ekle
+        self._register_hooks()
+    
+    def _register_hooks(self):
+        """ReLU katmanlarına hook ekle"""
+        def relu_backward_hook(module, grad_input, grad_output):
+            # Guided: sadece pozitif gradyanları geri yay
+            # ve sadece forward'da pozitif olan yerleri al
+            if len(self.forward_relu_outputs) > 0:
+                forward_output = self.forward_relu_outputs.pop()
+                # Hem gradyan pozitif hem de forward çıktı pozitif olmalı
+                guided_grad = torch.clamp(grad_input[0], min=0.0)
+                guided_grad = guided_grad * (forward_output > 0).float()
+                return (guided_grad,)
+            return grad_input
+        
+        def relu_forward_hook(module, input, output):
+            self.forward_relu_outputs.append(output)
+        
+        # Model'daki tüm ReLU modüllerini bul
+        for module in self.model.modules():
+            if isinstance(module, torch.nn.ReLU):
+                self.hooks.append(module.register_forward_hook(relu_forward_hook))
+                self.hooks.append(module.register_full_backward_hook(relu_backward_hook))
+    
+    def generate(self, input_tensor, target_class=None):
+        """
+        Guided Backpropagation haritası oluştur
         
         Returns:
-            saliency_map: (224, 224) NumPy array
+            guided_grads: (H, W) numpy array - kenar haritası
         """
-        from torchvision import transforms
+        self.forward_relu_outputs = []
         
-        # Görsel yükle
-        image = Image.open(image_path).convert('RGB')
+        # ReLU inplace'i devre dışı bırak (backward hook ile çakışıyor)
+        relu_inplace_states = []
+        for module in self.model.modules():
+            if isinstance(module, torch.nn.ReLU):
+                relu_inplace_states.append(module.inplace)
+                module.inplace = False
         
-        # Transform'ları uygula
-        transform = transforms.Compose([
-            transforms.Resize(int(224 * 1.15)),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], 
-                               std=[0.229, 0.224, 0.225])
-        ])
+        try:
+            # Gradient takibi aç
+            input_tensor = input_tensor.clone().detach().requires_grad_(True)
+            
+            # Forward pass
+            output = self.model(input_tensor)
+            
+            if target_class is None:
+                target_class = output.argmax(dim=1).item()
+            
+            # Backward pass
+            self.model.zero_grad()
+            target_score = output[0, target_class]
+            target_score.backward()
+            
+            # Gradyanları al
+            gradients = input_tensor.grad.data[0]  # (3, H, W)
+            
+            # RGB kanallarının maksimumunu al
+            guided_grads = gradients.abs().max(dim=0)[0]  # (H, W)
+            
+            return guided_grads.cpu().numpy()
+        finally:
+            # ReLU inplace'i eski haline getir
+            i = 0
+            for module in self.model.modules():
+                if isinstance(module, torch.nn.ReLU):
+                    module.inplace = relu_inplace_states[i]
+                    i += 1
+    
+    def visualize(self, guided_grads, colormap='gray'):
+        """
+        Guided Backprop sonucunu görselleştir
+        """
+        # Normalize
+        grads = guided_grads.copy()
+        grads = grads - grads.min()
+        grads = grads / (grads.max() + 1e-8)
         
-        input_tensor = transform(image).unsqueeze(0).to(device)
-        input_tensor.requires_grad_(True)
+        # 0-255 aralığına çek
+        grads = (grads * 255).astype(np.uint8)
         
-        # Forward pass
-        output = model(input_tensor)
-        target_class = output.argmax(dim=1).item()
-        target_score = output[0, target_class]
+        if colormap == 'gray':
+            # Siyah-beyaz (kenar görünümü)
+            return Image.fromarray(grads)
+        else:
+            # Renkli versiyon
+            colored = cv2.applyColorMap(grads, cv2.COLORMAP_VIRIDIS)
+            colored = cv2.cvtColor(colored, cv2.COLOR_BGR2RGB)
+            return Image.fromarray(colored)
+    
+    def remove_hooks(self):
+        """Hook'ları temizle"""
+        for hook in self.hooks:
+            hook.remove()
+        self.hooks = []
+
+
+class GuidedGradCAM:
+    """
+    Guided Grad-CAM
+    Grad-CAM (bölgesel) + Guided Backprop (piksel detayı) birleşimi
+    En profesyonel XAI görselleştirmesi
+    """
+    
+    def __init__(self, model, target_layer):
+        self.model = model
+        self.target_layer = target_layer
+        self._guided_bp = None
+    
+    def generate(self, input_tensor, target_class=None):
+        """
+        Guided Grad-CAM haritası oluştur
         
-        # Backward pass
-        model.zero_grad()
-        target_score.backward()
+        Returns:
+            guided_gradcam: (H, W) numpy array
+        """
+        # Tahmin sınıfı
+        with torch.no_grad():
+            output = self.model(input_tensor)
+            if target_class is None:
+                target_class = output.argmax(dim=1).item()
         
-        # Salience map hesapla (input gradientlerinin büyüklüğü)
-        saliency = input_tensor.grad.data
-        saliency = saliency.abs().max(dim=1)[0].squeeze()
+        # 1. Grad-CAM hesapla (bölgesel harita) - ÖNCE bunu yap, hook yok
+        gradcam = GradCAM(self.model, self.target_layer)
+        cam = gradcam.generate_cam(input_tensor.clone(), target_class)
         
-        # Normalize et
-        saliency_min = saliency.min()
-        saliency_max = saliency.max()
-        if saliency_max > saliency_min:
-            saliency = (saliency - saliency_min) / (saliency_max - saliency_min)
+        # 2. Guided Backprop hesapla (kenar haritası) - SONRA hook ekle
+        self._guided_bp = GuidedBackpropagation(self.model)
+        guided = self._guided_bp.generate(input_tensor.clone(), target_class)
         
-        return saliency.cpu().numpy()
+        # 3. CAM'i guided boyutuna resize et
+        cam_resized = cv2.resize(cam, (guided.shape[1], guided.shape[0]))
+        
+        # 4. Element-wise çarpım (Guided Grad-CAM)
+        guided_gradcam = cam_resized * guided
+        
+        return guided_gradcam
+    
+    def visualize(self, guided_gradcam, original_image=None, alpha=0.5):
+        """
+        Guided Grad-CAM sonucunu görselleştir
+        """
+        # Normalize
+        ggc = guided_gradcam.copy()
+        ggc = ggc - ggc.min()
+        ggc = ggc / (ggc.max() + 1e-8)
+        
+        # 0-255 aralığına çek
+        ggc = (ggc * 255).astype(np.uint8)
+        
+        # Renkli heatmap
+        heatmap = cv2.applyColorMap(ggc, cv2.COLORMAP_JET)
+        heatmap = cv2.cvtColor(heatmap, cv2.COLOR_BGR2RGB)
+        
+        if original_image is not None:
+            # Orijinal ile overlay
+            if isinstance(original_image, Image.Image):
+                orig = np.array(original_image)
+            else:
+                orig = original_image
+            
+            # Resize heatmap to original size
+            heatmap = cv2.resize(heatmap, (orig.shape[1], orig.shape[0]))
+            
+            # Blend
+            overlay = cv2.addWeighted(orig, 1 - alpha, heatmap, alpha, 0)
+            return Image.fromarray(overlay)
+        
+        return Image.fromarray(heatmap)
+    
+    def cleanup(self):
+        """Hook'ları temizle"""
+        if self._guided_bp:
+            self._guided_bp.remove_hooks()
+
+
+# SmoothGrad Saliency Map (Akademik Standart)
+class SalienceMap:
+    """
+    SmoothGrad Tabanlı Saliency Map
+    
+    Vanilla Saliency yerine SmoothGrad kullanarak gürültüyü azaltır.
+    Grad-CAM odak bölgesi ile sınırlandırılabilir.
+    
+    Referans: Smilkov et al. (2017) "SmoothGrad: removing noise by adding noise"
+    
+    Akademik İyileştirmeler:
+    - SmoothGrad: n=30 gürültülü örnek üzerinden ortalama
+    - ReLU aktivasyonu: Negatif gradyanları filtrele (Grad-CAM uyumu)
+    - Grad-CAM maskeleme: Odak bölgesi dışını filtrele
+    - Sobel kenar farkındalığı: Anatomik detayları vurgula
+    - Z-score normalizasyonu: Akademik standart
+    """
+    
+    def __init__(self, n_samples=30, noise_std=0.1):
+        """
+        Args:
+            n_samples: SmoothGrad için örnek sayısı (30 = akademik standart)
+            noise_std: Gürültü standart sapması (0.1 = optimal)
+        """
+        self.n_samples = n_samples
+        self.noise_std = noise_std
+    
+    def generate_saliency(self, input_tensor, model, device='cuda', target_class=None, gradcam_mask=None):
+        """
+        SmoothGrad Saliency Map oluştur
+        
+        Args:
+            input_tensor: İşlenmiş görsel tensorü (1, 3, 224, 224)
+            model: ResNet50 modeli
+            device: 'cuda' veya 'cpu'
+            target_class: Hedef sınıf indeksi (None ise tahmin edilen sınıf kullanılır)
+            gradcam_mask: Opsiyonel Grad-CAM haritası (saliency'yi bölgeyle sınırla)
+        
+        Returns:
+            saliency_map: (224, 224) tensor
+        """
+        # Hedef sınıfı belirle (dışarıdan verilmediyse ilk forward'dan al)
+        if target_class is None:
+            with torch.no_grad():
+                output = model(input_tensor)
+                target_class = output.argmax(dim=1).item()
+        
+        saliency_sum = None
+        
+        for _ in range(self.n_samples):
+            # Gürültü ekle
+            noise = torch.randn_like(input_tensor) * self.noise_std
+            noisy_input = (input_tensor + noise).clone().detach().requires_grad_(True)
+            
+            # Forward pass
+            output = model(noisy_input)
+            target_score = output[0, target_class]
+            
+            # Backward pass
+            model.zero_grad()
+            target_score.backward()
+            
+            # Saliency = gradient MEAN across channels + ReLU (Grad-CAM uyumu)
+            saliency = noisy_input.grad.data.mean(dim=1).squeeze()
+            saliency = torch.relu(saliency)  # Sadece pozitif etkiler
+            
+            if saliency_sum is None:
+                saliency_sum = saliency
+            else:
+                saliency_sum = saliency_sum + saliency
+        
+        # Ortalama al
+        smooth_saliency = saliency_sum / self.n_samples
+        
+        # Grad-CAM maskesi ile sınırla (opsiyonel)
+        if gradcam_mask is not None:
+            if isinstance(gradcam_mask, np.ndarray):
+                gradcam_mask = torch.from_numpy(gradcam_mask).to(smooth_saliency.device)
+            # Resize mask to saliency size
+            if gradcam_mask.shape != smooth_saliency.shape:
+                gradcam_mask = F.interpolate(
+                    gradcam_mask.unsqueeze(0).unsqueeze(0).float(),
+                    size=smooth_saliency.shape,
+                    mode='bilinear',
+                    align_corners=False
+                ).squeeze()
+            smooth_saliency = smooth_saliency * gradcam_mask
+        
+        return smooth_saliency
+    
+    def _apply_sobel_edges(self, saliency_np, original_image):
+        """
+        Sobel kenar tespiti ile saliency'yi anatomik detaylara odakla
+        """
+        # Orijinal görseli grayscale'e çevir
+        if isinstance(original_image, Image.Image):
+            img_gray = np.array(original_image.convert('L'))
+        else:
+            img_gray = cv2.cvtColor(original_image, cv2.COLOR_RGB2GRAY)
+        
+        # Resize to saliency size
+        img_gray = cv2.resize(img_gray, (saliency_np.shape[1], saliency_np.shape[0]))
+        
+        # Sobel kenar tespiti
+        sobelx = cv2.Sobel(img_gray, cv2.CV_64F, 1, 0, ksize=3)
+        sobely = cv2.Sobel(img_gray, cv2.CV_64F, 0, 1, ksize=3)
+        sobel_edges = np.sqrt(sobelx**2 + sobely**2)
+        
+        # Normalize edges
+        sobel_edges = (sobel_edges - sobel_edges.min()) / (sobel_edges.max() - sobel_edges.min() + 1e-8)
+        
+        # Kenarları vurgula (ama tamamen bastırma)
+        edge_weight = 0.5 + 0.5 * sobel_edges
+        return saliency_np * edge_weight
+
+    def visualize_saliency(self, saliency_map, original_image=None, use_edges=True):
+        """
+        Saliency map'i görselleştir (Akademik standart)
+        
+        Args:
+            saliency_map: Saliency tensor veya numpy array
+            original_image: Orijinal PIL Image (kenar tespiti için)
+            use_edges: Sobel kenar farkındalığı kullan
+        """
+        if isinstance(saliency_map, torch.Tensor):
+            saliency_map = saliency_map.cpu().numpy()
+        
+        # Sobel kenar farkındalığı ekle
+        if use_edges and original_image is not None:
+            saliency_map = self._apply_sobel_edges(saliency_map, original_image)
+        
+        # Z-score normalization (akademik standart)
+        mean_val = saliency_map.mean()
+        std_val = saliency_map.std()
+        saliency_map = (saliency_map - mean_val) / (std_val + 1e-8)
+        saliency_map = np.clip(saliency_map, 0, 3)  # 0-3σ aralığı
+        saliency_map = saliency_map / 3.0  # 0-1 normalize
+        
+        # Hafif blur (gürültü temizleme)
+        saliency_map = cv2.GaussianBlur(saliency_map.astype(np.float32), (5, 5), 0)
+        
+        # 0-255
+        smap = (saliency_map * 255).astype(np.uint8)
+        
+        # JET colormap (kırmızı = yüksek, mavi = düşük)
+        colored = cv2.applyColorMap(smap, cv2.COLORMAP_JET)
+        colored = cv2.cvtColor(colored, cv2.COLOR_BGR2RGB)
+        
+        return Image.fromarray(colored)
 
 
 def image_to_base64(pil_image):
