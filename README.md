@@ -116,11 +116,15 @@ curl -X POST http://localhost:5001/api/gradcam \
 }
 ```
 
-## �👨‍💻 Geliştirici
+## �👨‍💻 Geliştiriciler
 
 **Berke Gazioğlu**
 - GitHub: [@berkegazioglu](https://github.com/berkegazioglu)
 - Repository: [kedi-cins-tahmini](https://github.com/berkegazioglu/kedi-cins-tahmini)
+
+**Şükrü Barkın Özcan**
+- GitHub: [@barkinto](https://github.com/barkinto)
+
 
 ## 📜 Lisans
 
